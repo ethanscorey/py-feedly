@@ -195,6 +195,9 @@ class FeedlyClient(BaseAPIClient):
         refresh_response = self.post('/v3/auth/token',
                                      data=json.dumps(self.auth.refresh_data()))
         self.auth.access_token = refresh_response.json()['access_token']
+        self.session.headers['Authorization'] = ' '.join(
+            ['Bearer', self.auth.access_token]
+        )
 
     def revoke_refresh_token(self):
         self.post('/v3/auth/token',
