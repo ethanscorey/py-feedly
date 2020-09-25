@@ -283,7 +283,7 @@ class FeedlyClient(BaseAPIClient):
                             title: str = None,
                             enterprise: bool = False):
         data = NoEmpty(id=feed_id, title=title)
-        return self.put(f'/v3/collections/{collection_id}/feeds',
+        return self.put(f'/v3/collections/{quote(collection_id)}/feeds',
                         data=json.dumps(data),
                         enterprise=enterprise)
 
@@ -309,7 +309,7 @@ class FeedlyClient(BaseAPIClient):
                              collection_id: str,
                              feeds: List[Dict],
                              enterprise: bool = False):
-        return self.put(f'/v3/collections/{collection_id}/feeds/.mput',
+        return self.put(f'/v3/collections/{quote(collection_id)}/feeds/.mput',
                         data=json.dumps(feeds),
                         enterprise=enterprise)
 
@@ -333,7 +333,7 @@ class FeedlyClient(BaseAPIClient):
                                keep_orphans: bool = None,
                                enterprise: bool = False):
         orphan_data = NoEmpty(keepOrphanFeeds=keep_orphans)
-        self.delete(f'/v3/collections/{collection_id}/feeds/{feed_id}',
+        self.delete(f'/v3/collections/{quote(collection_id)}/feeds/{feed_id}',
                     params=orphan_data,
                     enterprise=enterprise)
 
@@ -361,7 +361,7 @@ class FeedlyClient(BaseAPIClient):
                                 keep_orphans: bool = False,
                                 enterprise: bool = False):
         orphan_data = NoEmpty(keepOrphanFeeds=keep_orphans)
-        return self.delete(f'/v3/collections/{collection_id}/feeds/.mdelete',
+        return self.delete(f'/v3/collections/{quote(collection_id)}/feeds/.mdelete',
                            data=json.dumps(feeds),
                            params=orphan_data,
                            enterprise=enterprise)
